@@ -1,5 +1,5 @@
 # apitest
-This is my solution for the task from Natera:
+This is my solution (in progress..) for the task from Natera:
 https://qa-quiz.natera.com/
 
 
