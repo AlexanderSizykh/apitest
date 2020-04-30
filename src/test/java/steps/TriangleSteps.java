@@ -6,15 +6,14 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import models.Triangle;
 import org.junit.Assert;
-import services.TriangleService;
 
 import java.util.List;
 import java.util.UUID;
 
-public class TriangleSteps {
-    private TriangleServiceImpl triangleService = new TriangleServiceImpl();
 
-    private static  List<Triangle> triangles;
+public class TriangleSteps {
+    private static TriangleServiceImpl triangleService = new TriangleServiceImpl();
+    private static List<Triangle> triangles;
 
     @Given("There are no any triangles")
     public void thereAreNoAnyTriangles() {
@@ -29,24 +28,31 @@ public class TriangleSteps {
             }
         }
 
-
-    @When("Creating new triangle with input {string}")
-    public void creatingNewTriangleWithSides(String arg0) {
-        Triangle triangle = Triangle.builder().input(arg0).build();
+    @When("Creating new (.*) triangle with sides: (.*)")
+    public void creatingNewTriangleWithSides(String description, String input) {
+        Triangle triangle = Triangle.builder().input(input).build();
         triangleService.create(triangle);
     }
 
-    @Then("There is {int} triangle\\(s) in the response list")
+    @Then("There is\\are {int} triangle\\s in the response list")
     public void thereIsTriangleSInTheResponseList(int arg0) {
         triangles = triangleService.getAll();
-        Assert.assertEquals(triangles.size(), arg0);
+        Assert.assertEquals(arg0, triangles.size());
     }
 
-    @Then("The triangle #{int} in the response list has sides {int} \\(first), {int} \\(second) and {int} \\(third)")
-    public void theTriangleWithIndexInTheResponseListHasSidesFirstSecondAndThird(int arg0, int arg1, int arg2, int arg3) {
-        Triangle selectedTriangle = triangles.get(arg0-1);
-        Assert.assertEquals(selectedTriangle.firstSide, arg1);
-        Assert.assertEquals(selectedTriangle.secondSide, arg2);
-        Assert.assertEquals(selectedTriangle.thirdSide, arg3);
+    @Then("The triangle with position in list #(.*) has sides (.*), (.*) and (.*)")
+    public void theTriangleWithPositionInTheResponseListHasSidesFirstSideSecondSideAndThirdSide(int positionInTheResponseList, double first, double second, double third) {
+        Triangle selectedTriangle = triangles.get(positionInTheResponseList-1);
+        Assert.assertEquals(first, selectedTriangle.firstSide, 0);
+        Assert.assertEquals(second, selectedTriangle.secondSide, 0);
+        Assert.assertEquals(third, selectedTriangle.thirdSide, 0);
+
     }
+
+    @When("Creating new triangle with request data: separator: (.*), input: (.*)")
+    public void creatingNewTriangleWithRequestInput(String separator, String input) {
+        Triangle triangle = Triangle.builder().separator(separator).input(input).build();
+        triangleService.create(triangle);
+        }
 }
+

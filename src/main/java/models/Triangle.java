@@ -16,9 +16,10 @@ public class Triangle {
     public String separator;
     public String input;
     public UUID id;
-    public int firstSide;
-    public int secondSide;
-    public int thirdSide;
+    public double firstSide;
+    public double secondSide;
+    public double thirdSide;
+
 
 
 }
