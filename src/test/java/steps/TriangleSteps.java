@@ -35,6 +35,13 @@ public class TriangleSteps {
         Triangle newTriangle = Triangle.builder().input(input).build();
         createdTriangle = triangleService.create(newTriangle);
     }
+    @When("Creating {int} same triangles with sides: {string}")
+    public void creatingTrianglesWithSides(int count, String input) {
+        while (count > 0) {
+            creatingNewTriangleWithSides("", input);
+            count--;
+        }
+    }
 
     @Then("There is\\are {int} triangle\\s in the response list")
     public void thereIsTriangleSInTheResponseList(int arg0) {
@@ -67,5 +74,6 @@ public class TriangleSteps {
         Triangle selectedTriangle = triangles.get(positionInTheResponseList-1);
         Assert.assertEquals(area, triangleService.getArea(selectedTriangle.id).value, 0);
     }
+
 }
 

@@ -27,6 +27,12 @@ Feature: Create triangle by API
 #      |with sides value > int       |1                 |4294967295; 4294967295; 4294967295|4294967295|4294967295|4294967295|
 
 
+  Scenario: Size of triangles list should be 10
+    When Creating 10 same triangles with sides: "1;1;1"
+    Then There is\are 10 triangle\s in the response list
+    When Creating new one more triangle with sides: 2;2;2
+    Then There is\are 10 triangle\s in the response list
+
   Scenario Outline: Try to create impossible triangle
     When Creating new <description> triangle with sides: <input>
     Then There is\are 0 triangle\s in the response list
