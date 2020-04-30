@@ -8,6 +8,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class DigitResult {
 
     @JsonProperty("result")
-    public int value;
+    public double value;
 
 }

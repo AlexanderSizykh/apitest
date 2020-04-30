@@ -6,19 +6,22 @@ Feature: Create triangle by API
   Scenario Outline: Create different types of triangles
     When Creating new <description> triangle with sides: <input>
     Then There is\are 1 triangle\s in the response list
-
     And The triangle with position in list #1 has sides <firstSide>, <secondSide> and <thirdSide>
+    And The triangle with position in list #1 has perimeter <perimeter>
+    And The triangle with position in list #1 has area <area>
+
     Examples:
-      |description      |input     |firstSide  |secondSide |thirdSide |
-      |Obtuse           |2;3;4     |2          |3          |4         |
-      |Right            |3;4;5     |3          |4          |5         |
-      |Acute            |66; 67; 68|66         |67         |68        |
-      |Isosceles        |3;3;5     |3          |3          |5         |
-      |Equilateral      |6; 6; 6   |6          |6          |6         |
+      |description      |input     |firstSide  |secondSide |thirdSide |perimeter| area |
+      |Obtuse           |2;3;4     |2          |3          |4         |9        |2.9047375096555625|
+      |Right            |3;4;5     |3          |4          |5         |12       |6                 |
+      |Acute            |66; 67; 68|66         |67         |68        |201      |1942.927800382711 |
+      |Isosceles        |3;3;5     |3          |3          |5         |11       |4.14578098794425  |
+      |Equilateral      |6; 6; 6   |6          |6          |6         |18       |15.588457268119896|
 #      TODO have to clarify the next steps expected behavior
-      |with negative number sides|-2; -3; -4  |2       |3          |4         |
-      |with one negative number side|8; 8; -8  |8       |8          |8         |
-      |with decimal numbered divided by dots sides|1.1;1.1;1.1 |1.1|1.1    |1.1       |
+      |with negative number sides|-2; -3; -4  |2       |3          |4         |9|2.9047375096555625|
+      |with one negative number side|8; 8; -8  |8       |8          |8         |24|27.712812921102035|
+      |with decimal numbered divided by dots sides|1.111;1.1;1.1 |1.111|1.1    |1.1       |3.311 |0.5274090744478497|
+
 
 #     impossible to deserialize with Jackson (tested manually - passed)
 #      |with sides value > int       |1                 |4294967295; 4294967295; 4294967295|4294967295|4294967295|4294967295|
